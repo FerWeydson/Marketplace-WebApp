@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Entities.Entities.Produto>
+
+@{
+    ViewData["Title"] = "Carrinho";
+}
+
+<h1>Seu carrinho</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>Imagem</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtdCompra)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+                <td>
+                    
+                            <img width="150" height="80" src=@item.Url />
+                        
+                    
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtdCompra)
+            </td>
+            <td>
+                @Html.ActionLink("Remover", "RemoverCarrinho", new {  id=item.IdProdutoCarrinho  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
