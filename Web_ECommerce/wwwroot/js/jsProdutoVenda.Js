@@ -3,7 +3,6 @@
 objetoVenda.AdicionarCarrinho = function (idProduto) {
 
     let nome = $("#nome_" + idProduto).val();
-    let qtd = $("#qtd_" + idProduto).val();
 
     $.ajax({
         type: 'POST',
@@ -12,7 +11,7 @@ objetoVenda.AdicionarCarrinho = function (idProduto) {
         cache: false,
         async: true,
         data: {
-            "id": idProduto,  "nome": nome,  "qtd": qtd 
+            "id": idProduto,  "nome": nome
         },
         success: function (data) {
             if (data.sucesso) {
@@ -43,19 +42,21 @@ objetoVenda.CarregaProdutos = function ()
             let htmlConteudo = "";
 
             data.forEach(function (Entitie) {
-                htmlConteudo += " <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>"
+                htmlConteudo += "<div>"
 
                 let idNome = "nome_" + Entitie.id;
-                let idQtd = "qtd_" + Entitie.id;
 
-                htmlConteudo += "<label id='" + idNome + "' > Produto: " + Entitie.nome + "</label></br>";
+
+                htmlConteudo += "<label id='" + idNome + "' > " + Entitie.nome + "</label><br/>";
                 if (Entitie.url != null && Entitie.url != "" && Entitie.url != undefined) {
-                    htmlConteudo += "<img width='200' height='100' src='" + Entitie.url + "'></br>";
-                }
-                htmlConteudo += "<label> Valor: " + Entitie.valor + "</label ></br>";
+                    htmlConteudo += "<img width='250' height='100' src='" + Entitie.url + "'><br/>";
 
-                htmlConteudo += "<label> Quantidade : <input type'number' value='1' id='" + idQtd + "'</label></br>";
-                htmlConteudo += "<input type='button' onclick='objetoVenda.AdicionarCarrinho(" + Entitie.id + ")' value= 'Comprar' </br>";
+                }
+
+                htmlConteudo += "<label >" + Entitie.valor + "</label><br>";
+                
+                
+                htmlConteudo += "<input class'btn_comprar' type='button' onclick='objetoVenda.AdicionarCarrinho(" + Entitie.id + ")' value= 'Comprar' </br>";
 
                 htmlConteudo += " </div>";
             });
@@ -66,7 +67,7 @@ objetoVenda.CarregaProdutos = function ()
 
 objetoVenda.CarregarQtdCarrinho = function () {
 
-    $("#qtdCarrinho").text("(0)");
+    $("#qtdCarrinho").text("");
     $.ajax({
         type: 'GET',
         url: '/api/QtdProdutoCarrinho',
